@@ -114,4 +114,4 @@ For bonus points, answer the question below by updating this file.
 Q: The management requested a new feature where in the fictional e-commerce app must have a "featured products" section.
 How would you go about implementing this feature in the backend?
 
-A: _Put your answer here_
+A: I will first create a table called featured_products which will have a relationship with the products table, the featured_products table will have a one to many relationship with the products table, the featured products table will have a product_id field as its foreign key, as for the logic I will create a function that associates the product id that is in the POST data and associate the id to the foreign key of the featured_products table.

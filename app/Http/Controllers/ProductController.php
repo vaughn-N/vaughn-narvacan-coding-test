@@ -24,7 +24,9 @@ class ProductController extends Controller
             $_products [] = [
                'id' => $product->id,
                'name' =>  $product->name,
-               'description' =>$product->description
+               'description' =>$product->description,
+               'updated_at' => $product->updated_at,
+               'created_at' => $product->created_at
             ];
         }
 
@@ -43,7 +45,46 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+			'description' => 'required|max:255',
+			'price' => 'required|regex:/^\d*(\.\d{1,2})?$/'
+        ];
+
+        $_input = $request->input();
+
+        $validator = Validator::make($_input, $rules);
+
+        if ($validator->fails()) {
+			$errors = $validator->errors()->toArray();
+
+			$data = [
+				'status' => 'Fail',
+				'errors' => $errors
+			];
+        } else {
+            DB::beginTransaction();
+
+            $product = new Product($_input);
+            $product->save();
+
+            DB::commit();
+
+            $data = [
+                'status' => 'Success',
+                'data' => [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'updated_at' => $product->updated_at,
+                    'created_at' => $product->created_at
+                ]
+            ];
+
+        }
+
+        return response()->json($data);
+
     }
 
     /**
