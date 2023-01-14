@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->text('description');
             $table->unsignedDecimal('price');
+            $table->tinyInteger('deprecated')->default(0);
             $table->timestamps();
         });
     }
