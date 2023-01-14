@@ -18,13 +18,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('deprecated','0')->paginate(10);
+        $products = Product::paginate(10);
 
         foreach($products AS $product){
             $_products [] = [
                'id' => $product->id,
                'name' =>  $product->name,
-               'description' =>$product->description,
+               'price' =>$product->price,
                'updated_at' => $product->updated_at,
                'created_at' => $product->created_at
             ];
@@ -95,6 +95,23 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::where('id',$id)->first();
+
+        
+        $_product= [
+            'id' => $product->id,
+            'name' =>  $product->name,
+            'description' =>$product->description,
+            'price' =>$product->price,
+            'updated_at' => $product->updated_at,
+            'created_at' => $product->created_at
+        ];
+        
+
+        $data = [
+            'products' => $_product
+        ];
+
+        return response()->json($_product);
     }
 }

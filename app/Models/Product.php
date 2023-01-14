@@ -11,12 +11,13 @@ class Product extends Model
 
     protected $table = 'products';
 
+    protected $dateFormat = 'U';
+
     protected $fillable = [
 
         'name',
         'description',
         'price',
 
-        'deprecated'
     ];
 }
