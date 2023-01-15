@@ -20,13 +20,19 @@ class ProductController extends Controller
     {
         $products = Product::paginate(10);
 
+
+
         foreach($products AS $product){
+
+            $updated_at_format = date('Y-m-j h:i A e',strtotime($product->updated_at));
+            $created_at_format = date('Y-m-j h:i A e',strtotime($product->created_at));
+
             $_products [] = [
                'id' => $product->id,
                'name' =>  $product->name,
                'price' =>$product->price,
-               'updated_at' => $product->updated_at,
-               'created_at' => $product->created_at
+               'updated_at' => $updated_at_format,
+               'created_at' => $created_at_format
             ];
         }
 
@@ -68,6 +74,11 @@ class ProductController extends Controller
             $product = new Product($_input);
             $product->save();
 
+            $updated_at_format = date('Y-m-j h:i A e',strtotime($product->updated_at));
+            $created_at_format = date('Y-m-j h:i A e',strtotime($product->created_at));
+
+
+
             DB::commit();
 
             $data = [
@@ -76,8 +87,8 @@ class ProductController extends Controller
                     'id' => $product->id,
                     'name' => $product->name,
                     'description' => $product->description,
-                    'updated_at' => $product->updated_at,
-                    'created_at' => $product->created_at
+                    'updated_at' => $updated_at_format,
+                    'created_at' => $created_at_format
                 ]
             ];
 
@@ -97,14 +108,16 @@ class ProductController extends Controller
     {
         $product = Product::where('id',$id)->first();
 
+        $updated_at_format = date('Y-m-j h:i A e',strtotime($product->updated_at));
+        $created_at_format = date('Y-m-j h:i A e',strtotime($product->created_at));
         
         $_product= [
             'id' => $product->id,
             'name' =>  $product->name,
             'description' =>$product->description,
             'price' =>$product->price,
-            'updated_at' => $product->updated_at,
-            'created_at' => $product->created_at
+            'updated_at' => $updated_at_format,
+            'created_at' => $created_at_format
         ];
         
 
