@@ -52,8 +52,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
-			'description' => 'required|max:255',
+            'name' => 'required|max:255',
+			'description' => 'required',
 			'price' => 'required|regex:/^\d*(\.\d{1,2})?$/'
         ];
 
