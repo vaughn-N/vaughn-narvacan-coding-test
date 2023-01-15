@@ -17,5 +17,6 @@ class Product extends Model
         'description',
         'price',
 
+        'deprecated'
     ];
 }
